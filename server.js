@@ -26,18 +26,17 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
   }))
+
+  app.use(require('./middlewares/flash'))
 // ROUTES
 app.get('/', (request, response) => {
-    if(request.session.error){
-        response.locals.error = request.session.error
-        request.session.error = undefined
-    }
+    console.log(request.session)
     response.render('pages/index')
 })
 
 app.post('/', (request, response) => {
     if(request.body.message === undefined || request.body.message ==='') {
-        request.session.error = "Il y a une erreur"
+        request.flash('error', "vous n'avez pas posté de message")
         response.redirect('/')
 
     }
