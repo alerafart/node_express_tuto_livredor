@@ -15,3 +15,6 @@
 
 ### install body parser to manage form sumbmit request body
 `npm install body-parser`
+
+### install express session to save users cookies in error case
+`$ npm install express-session`

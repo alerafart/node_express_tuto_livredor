@@ -2,7 +2,7 @@ const { request, response } = require('express')
 let express = require('express')
 let app = express()
 let bodyParser = require('body-parser')
-
+var session = require('express-session')
 // app.use(express.json()) // for parsing application/json
 
 // Moteur de template
@@ -20,16 +20,28 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+app.use(session({
+    secret: 'er',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }))
 // ROUTES
 app.get('/', (request, response) => {
-    // response.send('bonjour')
-    response.render('pages/index', {test: 'salut'})
+    if(request.session.error){
+        response.locals.error = request.session.error
+        request.session.error = undefined
+    }
+    response.render('pages/index')
 })
 
 app.post('/', (request, response) => {
     if(request.body.message === undefined || request.body.message ==='') {
-        response.render('pages/index', {error: "Vous n'avez pas rentré de message"})
+        request.session.error = "Il y a une erreur"
+        response.redirect('/')
+
     }
+    
 })
 
 app.listen(8080)
