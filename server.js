@@ -28,6 +28,7 @@ app.use(session({
   }))
 
   app.use(require('./middlewares/flash'))
+
 // ROUTES
 app.get('/', (request, response) => {
     console.log(request.session)
@@ -35,10 +36,16 @@ app.get('/', (request, response) => {
 })
 
 app.post('/', (request, response) => {
-    if(request.body.message === undefined || request.body.message ==='') {
+    if (request.body.message === undefined || request.body.message ==='') {
         request.flash('error', "vous n'avez pas posté de message")
         response.redirect('/')
 
+    } else {
+        let message = require('./models/message')
+        message.create(request.body.message, function () {
+            request.flash('success', "Merci")
+            response.redirect('/')
+        })
     }
     
 })
