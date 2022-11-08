@@ -16,9 +16,15 @@
     </h3>
 
     <% for (message of messages) { %>
-
+        
         <div class="comment">
+            <a class="avatar">
+                <img src="https://cdn-icons-png.flaticon.com/128/4128/4128176.png" />
+            </a>
             <div class="content">
+                <div class="date">
+                    <%= message.created_at %>
+                </div>
                 <div class="test"><%= message.content %></div>
             </div>
         </div>

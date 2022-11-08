@@ -18,3 +18,6 @@
 
 ### install express session to save users cookies in error case
 `$ npm install express-session`
+
+### install date-fns lib to manage dates
+`$ npm install date-fns --save`
