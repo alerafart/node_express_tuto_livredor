@@ -30,8 +30,10 @@ app.use(session({
   app.use(require('./middlewares/flash'))
 
 // ROUTES
+
 app.get('/', (request, response) => {
     // console.log(request.session)
+    console.log(process.env.NODE_ENV)
     let Message = require('./models/message')
     Message.all(function (messages) {
         response.render('pages/index', {messages: messages})
@@ -52,6 +54,14 @@ app.post('/', (request, response) => {
         })
     }
     
+})
+
+app.get('/message/:id', (request, response) => {
+    // request.params.id
+    let Message = require('./models/message')
+    Message.find(request.params.id, function (message) {
+        response.render('messages/show', {message:message})
+    })
 })
 
 app.listen(8080)

@@ -11,6 +11,9 @@ class Message {
         this.row = row
     }
 
+    get id () {
+        return this.row.id
+    }
     get content () {
         return this.row.content
     }
@@ -19,7 +22,6 @@ class Message {
         let date = (this.row.created_at)
         console.log(this.row.created_at)
         return format(date, "MM/dd/yyyy 'at' H:mm")
-         
         // return this.row.created_at 
     }
 
@@ -41,6 +43,13 @@ class Message {
         connection.query('SELECT * FROM messages', (err, rows) => {
             if(err) throw err
             cb(rows.map((row) => new Message(row)))
+        })
+    }
+
+    static find (id, cb) {
+        connection.query('SELECT * FROM messages WHERE id = ? LIMIT 1', [id], (err, rows) => {
+            if(err) throw err
+            cb (new Message(rows[0]))
         })
     }
 }

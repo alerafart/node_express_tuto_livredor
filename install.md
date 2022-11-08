@@ -1,7 +1,6 @@
 ### initiate npm
 ` npm init `
 
-
 ### install express
 `  npm i --save express `
 
@@ -21,3 +20,11 @@
 
 ### install date-fns lib to manage dates
 `$ npm install date-fns --save`
+
+If in prod not un localhost, replace in package.json
+
+`"start": "nodemon server.js"`
+
+by
+
+`"start": "NODE_ENV=production nodemon server.js"`
