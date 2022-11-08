@@ -1,6 +1,4 @@
 let connection = require('../config/db')
- 
-
 
 class Message {
     static create (content, cb) {
@@ -9,6 +7,14 @@ class Message {
             cb(result)
         })
     }
+
+    static all (cb) {
+        connection.query('SELECT * FROM messages', (err, rows) => {
+            if(err) throw err
+            cb(rows)
+        })
+    }
 }
+
 
 module.exports = Message

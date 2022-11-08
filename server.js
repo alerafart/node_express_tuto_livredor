@@ -31,8 +31,12 @@ app.use(session({
 
 // ROUTES
 app.get('/', (request, response) => {
-    console.log(request.session)
-    response.render('pages/index')
+    // console.log(request.session)
+    let Message = require('./models/message')
+    Message.all(function (messages) {
+        response.render('pages/index', {messages: messages})
+    })
+    
 })
 
 app.post('/', (request, response) => {
@@ -41,8 +45,8 @@ app.post('/', (request, response) => {
         response.redirect('/')
 
     } else {
-        let message = require('./models/message')
-        message.create(request.body.message, function () {
+        let Message = require('./models/message')
+        Message.create(request.body.message, function () {
             request.flash('success', "Merci")
             response.redirect('/')
         })
